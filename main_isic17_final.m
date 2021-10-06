@@ -53,9 +53,6 @@ for lp = t:-1:1
     fn = uC_test(1, 2);
     tn = uC_test(2, 2);
     confM(lp,:) = [tp, fp, fn, tn];
-%     fp = sum(uC_test(:,1)) - tp;
-%     fn = sum(uC_test(1,:))-tp;
-%     tn = sum(sum(uC_test,1))-fn-fp-tp;
 
     precision = tp/(tp + fp); % also called as  Positive Predictive Value (PPV)
     PRE(lp) = precision;
@@ -69,8 +66,7 @@ for lp = t:-1:1
     MCC(lp) = (tp*tn-fp*fn)/sqrt((tp+fp)*(tp+fn)*(tn+fp)*(tn+fn));
     
     REC = 100*[ACC', SPE', SEN', PRE', F1', JCC'];
-    %     clear('Y_train', 'Y_test', 'label_train', 'label_test', ...
-    %         'Yw_train', 'label_w_train', 'Yw_test', 'label_w_test');
+    
     fprintf('End of loop %d %\n', lp);
     fprintf('\n');
 end % lp
