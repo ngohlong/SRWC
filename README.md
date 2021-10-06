@@ -10,6 +10,7 @@ a/ ISIC2017 dataset
 
 b/ Other datasets
 - Open and Run "recurse_dwt_sub.m".
+NOTE: AFTER TRAINING, YOU WILL OBTAIN THE ".MAT" FILE IN FOLDER "DATA", WHICH WILL BE USED AS THE INPUT OF THE TEST PHASE.
 
 2. Test phase
 a/ ISIC2017 dataset
