@@ -5,7 +5,7 @@ tic;
 clear all; close all;
 addpath(genpath('data'));
 addpath('utils');
-mode = 3;
+mode = 3; % choose mode to get the data from the training/validation/test set
 
 switch mode
     case 1
@@ -27,7 +27,6 @@ groundTruth = csvread(groundTruthFile, 1, 1);
 imgSubMat_mela = []; imgSubMat_benign = [];
 tmp_label_mela = []; tmp_label_benign = [];
 s = 1; t = 1;
-%%% recurse sub-directories
 
 %% get all filenames that match�myFilePattern
 myFiles = dir(fullfile(myRootDir, myFileExtension));
@@ -51,12 +50,12 @@ for i = (numFiles):-1:1
     Xcr = Xgray(xmin:p, ymin:q);
     
     % resize the image
-    Xfin = imresize(Xcr, [256, 192], 'bicubic'); %192x256 or 256x192 or 600x450 or 256x256 or 128x96 
-    % or 230x172 or 272x204
-    % wavelet decomposition in quaternions
-    [cA1,cH1,cV1,cD1] = dwt2(Xfin, 'db1'); %daubechies transformation    
+    Xfin = imresize(Xcr, [256, 192], 'bicubic');
+
+    % wavelet decomposition 
+    [cA1,cH1,cV1,cD1] = dwt2(Xfin, 'db1'); % haar transformation    
     tmp = double(cA1(:));    
-%     tmp = double(cD1(:));    
+    
     if groundTruth(i,1)==1;
         imgSubMat_mela(:,s) = tmp;    
         tmp_label_mela(s) = 1;
@@ -82,4 +81,3 @@ switch mode
 end
 save(fn, 'Y', 'Y_label', '-v7.3');
 toc;
-% end

@@ -1,5 +1,3 @@
-% Start with a folder and get a list of all subfolders.
-% Finds all images in that folder and all of its subfolders
 % mix the training, validation and test set together to obtain two classes
 % benign and malignant
 tic;
@@ -62,4 +60,3 @@ Yw = imgMat_pca;
 fn = strcat('data/myISICcr80plus256_Wavelet1.mat');    
 save(fn, 'Yw', 'Yw_range', '-v7.3');
 toc;
-% end

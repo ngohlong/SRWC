@@ -1,4 +1,4 @@
-% get additional malignant images from ISIC18 and add to the ISIC17
+% get additional malignant images from ISIC Archive
 % database to balance the two classes (benign and malignant)
 tic;
 clear all; close all;
@@ -20,6 +20,7 @@ for i = 1:numSubDirs
     imgSubMat = [];%imgSubMat1 = [];
     if (mySubDirs(i).isdir == 1) %myRootDir might have files as well
         currentSubDir = fullfile(myRootDir, mySubDirs(i).name);
+        
         %get all filenames that match myFilePattern
         myFiles = dir(fullfile(currentSubDir, myFileExtension));
         numFiles = length(myFiles);
@@ -30,6 +31,7 @@ for i = 1:numSubDirs
             numPreviousFiles = length(previousFiles);
             position = position + numPreviousFiles;
         end
+        
         %read all files in sub directory and transform to wavelet space
         for k = 1:(numFiles)
             fileName = myFiles(k).name;
@@ -39,6 +41,7 @@ for i = 1:numSubDirs
                 Xgray = rgb2gray(X);
             end
             [m, n] = size(Xgray);
+            
             % crop the image first
             r = 0.8; % ratio between cropped image and the original one
             p = round(r*m); q = round(r*n);
@@ -46,22 +49,19 @@ for i = 1:numSubDirs
             ymin = round((n-q)/2);
             win = [xmin ymin p q];
             Xcr = Xgray(xmin:p, ymin:q);
+            
             % resize the image
-            Xfin = imresize(Xcr, [256, 192], 'bicubic'); %192x256 or 256x192 or 600x450 or 256x256 or 128x96
+            Xfin = imresize(Xcr, [256, 192], 'bicubic');
             % =========================================================================
             [cA1, cH1, cV1, cD1] = dwt2(Xfin,'db1'); %haar transformation
             
-            cA1_tmp(:,k+position) = double(cA1(:));
-            %             cH1_tmp(:,k+position) = double(cH1(:));
-            %             cV1_tmp(:,k+position) = double(cV1(:));
-            %             cD1_tmp(:,k+position) = double(cD1(:));         
+            cA1_tmp(:,k+position) = double(cA1(:));      
             Y_label(k+position) = 1;
         end
     end
 end
-   
+
 Y = cA1_tmp;
 %% save data
-
 fn = strcat('data/myISIC_test_cr80plus_256x192.mat' );
 save(fn, 'Y', 'Y_label', '-v7.3');
