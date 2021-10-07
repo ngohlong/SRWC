@@ -1,7 +1,9 @@
 # SRWC
 
 1. Training phase
-* Open the folder "training"
+
+1.1 Copy the dataset into the folder "data"
+1.2 Open the folder "training"
 
 a/ ISIC2017 dataset
 - Open and Run "recurse_dwt_isic17_mela.m"
