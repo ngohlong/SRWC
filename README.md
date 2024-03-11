@@ -3,6 +3,7 @@
 1. Training phase
 
 1.1 Copy the dataset into the folder "data"
+
 1.2 Open the folder "training"
 
 a/ ISIC2017 dataset
